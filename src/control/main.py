@@ -1,3 +1,5 @@
+import copy
+
 class Projeto():
     
     def __init__(self,users) -> None:
@@ -5,10 +7,11 @@ class Projeto():
         self.transactions = []
 
     def realizar_calculo(self):
+        
         # Calcula o total e a média dos saldos
         total = sum(list(user.values())[0] for user in self.users)
         average = total / len(self.users)
-        balances = self.users
+        balances = [copy.deepcopy(user) for user in self.users]
         
         # Calcula a diferença entre os saldos e a média
         for balance in balances:
@@ -52,26 +55,76 @@ class Projeto():
         self.transactions = transactions
         return transactions
 
-    def nova_conta(self,usuario,valor):
-        # self.realizar_calculo()
-        # if usuario in self.usuarios:
-        #     return True
+    def nova_conta(self,pagador,valor):
+        for user in self.users:
+            for name in user.keys():
+                if str(name).upper() == str(pagador).upper():
+                    user[name] += valor
+                    
+        self.realizar_calculo()
         pass
         
     def pagar_divida(self, pagador, receptor):
-        if any(str(pagador).upper() in str(transaction).upper() for transaction in transactions) and any(str(receptor).upper() in str(transaction).upper() for transaction in transactions):
-            # Pagamento da divida
-            
-            print('tem')
+        
+        transactions = self.get_transactions()
+        
+        if any(str(pagador).upper() in str(transaction[1]).upper() for transaction in transactions) and any(str(receptor).upper() in str(transaction[0]).upper() for transaction in transactions):
+            print(f'É Possivel realizar o pagamento, pois o pagador descrito deve pro receptor descrito')
 
-users = [{'Gabriel': 8.08}, {'Felipe': 8.09}, {'Davi': 8.08}, {'Jonathan': 8.09}, {'Gabriel P': 8.08}, {'Matheus': 8.08}]
+            ##################### Pagamento da divida #####################
+            
+            for index, user in enumerate(self.users):
+                for name in user.keys():
+                    if str(name).upper() == str(pagador).upper():
+                        self.users[index][name] += 10
+                        # pass
+            
+            for index, user in enumerate(self.users):
+                for name in user.keys():
+                    if str(name).upper() == str(receptor).upper():
+                        self.users[index][name] -= 10
+                        # pass
+                        
+            ###############################################################
+            
+            self.realizar_calculo()
+            
+        elif any(str(pagador).upper() in str(transaction).upper() for transaction in transactions) and any(str(receptor).upper() in str(transaction).upper() for transaction in transactions):
+            print(f'O pagador e receptor descritos estão de alguma forma posicionados na lista de devedores e pagadores, mas o pagador nã deve diretamente ao receptor')
+            
+        else:
+            print('Um, dois, ou nenhum dos nomes informados (de pagador e receptor) estão na lista de devedores e pagadores')
+    
+    def new_user(self,user):
+        self.users.append({user:0})
+        
+    def get_users(self):
+        return self.users        
+    
+    def get_transactions(self):
+        return self.transactions    
+
+    def get_transactions_string(self):
+        # imprimir string bo
+        pass
+    
+############################################ Criando uma instancia da classe Projeto para rodar os códigos ############################################
+
+users = [{'Gabriel': 5}, {'Felipe': 10}, {'Davi': 5}, {'Jonathan': 7}, {'Gabriel P': 10}, {'Matheus': 20}]
 
 projeto = Projeto(users)
 
+projeto.new_user('Couto')
+projeto.nova_conta('Couto',100)
+
 transactions = projeto.realizar_calculo()
+
 print(transactions)
 
+usuarios = projeto.get_users()
+
 # testando se o nome está na lista de transaçoes
-projeto.pagar_divida('Felipe','jonathan')
+projeto.pagar_divida('Gabriel','Couto')
+print(usuarios)
 
 
