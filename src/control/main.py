@@ -121,24 +121,24 @@ class Projeto():
     
 ############################################ Criando uma instancia da classe Projeto para rodar os códigos ############################################
 
-users = [{'Gabriel': 5}, {'Felipe': 10}, {'Davi': 5}, {'Jonathan': 7}, {'Gabriel P': 10}, {'Matheus': 20}]
+# users = [{'Gabriel': 5}, {'Felipe': 10}, {'Davi': 5}, {'Jonathan': 7}, {'Gabriel P': 10}, {'Matheus': 20}]
 
-projeto = Projeto(users)
+# projeto = Projeto(users)
 
-projeto.new_user('Couto')
-projeto.nova_conta('Couto',100)
+# projeto.new_user('Couto')
+# projeto.nova_conta('Couto',100)
 
-transactions = projeto.realizar_calculo()
+# transactions = projeto.realizar_calculo()
 
-print(transactions)
+# print(transactions)
 
-usuarios = projeto.get_users()
+# usuarios = projeto.get_users()
 
-# testando se o nome está na lista de transaçoes
-print(usuarios)
-projeto.pagar_divida('Gabriel','Couto')
-print(usuarios)
+# # testando se o nome está na lista de transaçoes
+# print(usuarios)
+# projeto.pagar_divida('Gabriel','Couto')
+# print(usuarios)
 
-print(projeto.get_transactions_string())
+# print(projeto.get_transactions_string())
 
 #######################################################################################################################################################

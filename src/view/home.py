@@ -1,5 +1,6 @@
 from tkinter import *
 import customtkinter
+from ..control.main import Projeto
 
 # Define global variables to store the windows
 janela = None
@@ -39,7 +40,12 @@ def abrir_janela1():
     entry.configure(fg_color="#3d3d3d")
 
     # BOTÃO INSERIR
-    botao = customtkinter.CTkButton(janela, text="Inserir")
+    def inserir_nome():
+        nome_inserido = entry.get()
+        Projeto.new_user(self=projeto, user=nome_inserido)
+        entry.delete(0, END)
+
+    botao = customtkinter.CTkButton(janela, text="Inserir", command=inserir_nome)
     botao.pack(padx=10, pady=10)
     botao.configure(corner_radius=10, font=("Arial",15, "bold"))
 
@@ -83,9 +89,13 @@ def abrir_janela2():
     teste = customtkinter.CTkLabel(janela2, text="Grupo :", font=("Arial",16, "bold"))
     teste.pack(padx=10, pady=3)
 
-    #MARGEM
-    margem = customtkinter.CTkLabel(janela2, text="")
-    margem.pack(pady=20, side=TOP)
+    #LABEL NOMES
+    Projeto.realizar_calculo(self=projeto)
+    transactions_string = Projeto.get_transactions_string(self=projeto)
+
+    nomes = customtkinter.CTkLabel(janela2, text=transactions_string)
+    nomes.pack(pady=20, side=TOP)
+    print("Transactions string:", transactions_string)
 
     # Button to go back to janela1
     botao3 = customtkinter.CTkButton(janela2, text="Nova Conta")
@@ -100,4 +110,8 @@ def abrir_janela2():
     janela2.mainloop()
 
 # Run the initial window (janela1)
+users = [{'Gabriel': 5}, {'Felipe': 10}, {'Davi': 5}, {'Jonathan': 7}, {'Gabriel P': 10}, {'Matheus': 20}]
+
+projeto = Projeto(users)
+
 abrir_janela1()
