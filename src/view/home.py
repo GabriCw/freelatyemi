@@ -2,19 +2,39 @@ from tkinter import *
 import customtkinter
 from ..control.main import Projeto
 from PIL import Image, ImageTk 
+import tempfile
+import os
+
 
 # Define global variables to store the windows
 janela = None
 janela2 = None
 janela3 = None
 janela4 = None
+imagem = None
+
+def carregar_imagem():
+    # Carregue a imagem
+    imagem = Image.open('src/assets/Logo.jpg')
+
+    # Redimensione a imagem
+    largura = 441  # Defina a largura desejada
+    altura = 140  # Defina a altura desejada
+    imagem = imagem.resize((largura, altura))
+    
+    # Crie o objeto PhotoImages
+    imagem = ImageTk.PhotoImage(imagem)
+
+    return imagem
 
 def abrir_janela1():
+
+    global imagem
     global janela
     global janela2
     global janela3
     global janela4
-
+    
     if janela2:
         janela2.withdraw()
 
@@ -27,21 +47,19 @@ def abrir_janela1():
     margem_cima = customtkinter.CTkLabel(janela, text="")
     margem_cima.pack(pady=10, side=TOP)
 
-    # # Carregue a imagem
-    # imagem = Image.open("C:/Users/gabri/Documents/freelatyemi/src/assets/Logo.jpg")
 
-    # # Redimensione a imagem
-    # largura = 441  # Defina a largura desejada
-    # altura = 140  # Defina a altura desejada
-    # imagem = imagem.resize((largura, altura))
-
-    # # Crie o objeto PhotoImage
-    # imagem = ImageTk.PhotoImage(imagem)
-
-    # # Crie um widget Label para exibir a imagem
-    # label_imagem = Label(janela, image=imagem, bg="#242424")
-    # label_imagem.pack(padx=0, pady=0)
-
+    ################# Carregando (tentando) a imagem #################
+    if imagem is None:
+        imagem = carregar_imagem()
+    
+    # Crie um widget Label para exibir a imagem
+    label_imagem = Label(janela, image=imagem, bg="#242424", anchor=NW)
+    label_imagem.image_names = imagem
+    label_imagem.pack(padx=0, pady=0)
+    
+    ##################################################################
+    
+    
     #MARGEM TOP
     margem_cima = customtkinter.CTkLabel(janela, text="")
     margem_cima.pack(pady=10, side=TOP)
@@ -75,14 +93,14 @@ def abrir_janela1():
 
     #MARGEM
     margem2 = customtkinter.CTkLabel(janela, text="")
-    margem2.pack(pady=30, side=TOP)
+    margem2.pack(pady=10, side=TOP)
 
     # LABEL CONCLUIR
     nome = customtkinter.CTkLabel(janela, text="Não quer inserir mais ninguém?", font=("Arial",16, "bold"))
     nome.pack(padx=10, pady=3)
 
     # Button to open janela2
-    botao2 = customtkinter.CTkButton(janela, text="Concluir", command=abrir_janela2)
+    botao2 = customtkinter.CTkButton(janela, text="Concluir", command=abrir_janela2, hover_color='dark green')
     botao2.pack(padx=10, pady=10)
     botao2.configure(corner_radius=10, font=("Arial",15, "bold"))
 
@@ -93,6 +111,10 @@ def abrir_janela2():
     global janela2
     global janela3
     global janela4
+    global imagem
+    
+    if imagem is None:
+        imagem = carregar_imagem()
 
     if janela:
         janela.withdraw()
@@ -118,7 +140,7 @@ def abrir_janela2():
     margem_cima.pack(pady=30, side=TOP)
 
     # LABEL GRUPO
-    grupo = customtkinter.CTkLabel(janela2, text="Grupo :", font=("Arial",16, "bold"))
+    grupo = customtkinter.CTkLabel(janela2, text="Integrantes do Grupo :", font=("Arial",16, "bold"), text_color='green')
     grupo.pack(padx=10, pady=3)
 
     #LABEL NOMES
@@ -133,7 +155,7 @@ def abrir_janela2():
     margem2.pack(pady=15, side=TOP)
 
     # LABEL GRUPO
-    dividas = customtkinter.CTkLabel(janela2, text="Dividas em aberto:", font=("Arial",16, "bold"))
+    dividas = customtkinter.CTkLabel(janela2, text="Dividas em aberto:", font=("Arial",16, "bold"), text_color='red')
     dividas.pack(padx=10, pady=3)
 
     #LABEL DIVIDAS
@@ -149,7 +171,7 @@ def abrir_janela2():
     botao3.configure(corner_radius=10, font=("Arial",15, "bold"))
 
     # Button to go back to janela1
-    botao4 = customtkinter.CTkButton(janela2, text="Pagar Conta", command=abrir_janela4)
+    botao4 = customtkinter.CTkButton(janela2, text="Pagar Divida", command=abrir_janela4)
     botao4.pack(padx=10, pady=5, side=LEFT)
     botao4.configure(corner_radius=10, font=("Arial",15, "bold"))
 
@@ -161,6 +183,10 @@ def abrir_janela3():
     global janela2
     global janela3
     global janela4
+    global imagem
+    
+    if imagem is None:
+        imagem = carregar_imagem()
 
     if janela2:
         janela2.withdraw()
@@ -200,19 +226,23 @@ def abrir_janela3():
     #MARGEM
     margem2 = customtkinter.CTkLabel(janela3, text="")
     margem2.pack(pady=20, side=TOP)
-
+ 
     # BOTÃO ADICIONAR CONTA
     def novaconta():
+        status = customtkinter.CTkLabel(janela3, text='', font=("Arial",16, "bold"))
         pagador = entry2.get()
         preco = entry3.get()
         Projeto.nova_conta(self=projeto, pagador=pagador, valor=preco)
         entry2.delete(0, END)
         entry3.delete(0, END)
+        # LABEL NOVA CONTA STATUS
+        status = customtkinter.CTkLabel(janela3, text=Projeto.get_nova_conta_status(self=projeto), font=("Arial",16, "bold"))
+        status.pack(padx=10, pady=10)
 
     botao5 = customtkinter.CTkButton(janela3, text="Adicionar Conta", command=novaconta)
     botao5.pack(padx=10, pady=10)
     botao5.configure(corner_radius=10, font=("Arial",15, "bold"))
-
+    
     janela3.mainloop()
 
 def abrir_janela4():
@@ -221,7 +251,11 @@ def abrir_janela4():
     global janela2
     global janela3
     global janela4
+    global imagem
 
+    if imagem is None:
+        imagem = carregar_imagem()
+    
     if janela2:
         janela2.withdraw()
 
@@ -261,13 +295,16 @@ def abrir_janela4():
     margem2 = customtkinter.CTkLabel(janela4, text="")
     margem2.pack(pady=20, side=TOP)
 
-    # BOTÃO ADICIONAR CONTA
+    # BOTÃO PAGAR DIVIDA
     def pagar_a_divida():
         pagador = entry4.get()
         beneficiado = entry5.get()
         Projeto.pagar_divida(self=projeto, pagador=pagador, receptor=beneficiado)
         entry4.delete(0, END)
         entry5.delete(0, END)
+        # LABEL PAGAR DIVIDA STATUS
+        status2 = customtkinter.CTkLabel(janela4, text=Projeto.get_pagar_divida_status(self=projeto), font=("Arial",16, "bold"))
+        status2.pack(padx=10, pady=3)
 
     botao7 = customtkinter.CTkButton(janela4, text="Pagar Divida", command=pagar_a_divida)
     botao7.pack(padx=10, pady=10)
@@ -275,9 +312,11 @@ def abrir_janela4():
 
     janela4.mainloop()
 
+
 # Run the initial window (janela1)
 users = []
 
 projeto = Projeto(users)
 
 abrir_janela1()
+imagem = carregar_imagem()
