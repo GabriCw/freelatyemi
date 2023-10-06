@@ -22,6 +22,9 @@ class Controller():
     
     def new_user(self,user):
         self.model.new_user(user)
+    
+    def get_new_user_status(self):
+        return self.model.get_new_user_status()
         
     def get_users(self):
         return self.model.get_users()

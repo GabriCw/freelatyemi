@@ -5,8 +5,9 @@ class Model():
     def __init__(self,users) -> None:
         self.users = users
         self.transactions = []
-        self.nova_conta_status = ''
-        self.pagar_divida_status = ''
+        self.new_user_status = []
+        self.nova_conta_status = []
+        self.pagar_divida_status = []
 
     def realizar_calculo(self):
         
@@ -69,12 +70,12 @@ class Model():
                     if str(name).upper() == str(pagador).upper():
                         user[name] += float(valor)
                         n_existe = False
-                        self.set_nova_conta_status(f'{pagador} pagou uma conta de {valor} reais!')
+                        self.set_nova_conta_status([1,f'{pagador} pagou uma conta de {valor} reais!'])
             if n_existe == True:
-                self.set_nova_conta_status('Usuário não está presente no grupo')
+                self.set_nova_conta_status([0,'Usuário não está presente no grupo'])
 
         except:
-            self.set_nova_conta_status('Campos não preenchidos corretamente')
+            self.set_nova_conta_status([0,'Campos não preenchidos corretamente'])
             
         self.realizar_calculo()
     
@@ -82,7 +83,7 @@ class Model():
         self.nova_conta_status = status
     
     def get_nova_conta_status(self):
-        print(self.nova_conta_status)
+        # print(self.nova_conta_status)
         return self.nova_conta_status
     
     def pagar_divida(self, pagador, receptor):
@@ -111,17 +112,17 @@ class Model():
                                 self.users[index][name] -= transacao[2]
                         # pass
                         
-            self.set_pagar_divida_status(f'Pagamento realizado de {pagador} para {receptor}!')
+            self.set_pagar_divida_status([1,f'Pagamento realizado de {pagador} para {receptor}!'])
             ###############################################################
             
             self.realizar_calculo()
             
         elif any(str(pagador).upper() in str(transaction).upper() for transaction in transactions) and any(str(receptor).upper() in str(transaction).upper() for transaction in transactions):
             
-            self.set_pagar_divida_status(f'O pagador e receptor descritos estão \nde alguma forma posicionados na lista de \ndevedores e pagadores, mas o pagador não deve \ndiretamente ao receptor')
+            self.set_pagar_divida_status([0,f'O pagador e receptor descritos estão \nde alguma forma posicionados na lista de \ndevedores e pagadores, mas o pagador não deve \ndiretamente ao receptor'])
             
         else:
-            self.set_pagar_divida_status('Um, dois, ou nenhum dos nomes informados\n (de pagador e receptor) estão na lista de \ndevedores e pagadores')
+            self.set_pagar_divida_status([0,'Um, dois, ou nenhum dos nomes informados\n (de pagador e receptor) estão na lista de \ndevedores e pagadores'])
     
     def set_pagar_divida_status(self,status):
         self.pagar_divida_status = status
@@ -130,7 +131,24 @@ class Model():
         return self.pagar_divida_status
     
     def new_user(self,user):
-        self.users.append({user:0})
+        is_new = True
+        for userr in self.users:
+            for name in userr.keys():
+                if str(name).upper() == str(user).upper():
+                    is_new = False
+        if user == '':
+            self.set_new_user_status([0,f'Escreva um nome correto!'])
+        elif is_new == True:
+            self.users.append({user:0})
+            self.set_new_user_status([1,f'O usuário {user} foi inserido no grupo!'])
+        else:
+            self.set_new_user_status([0,'O usuário inserido ja está cadastrado\nno grupo!'])
+    
+    def set_new_user_status(self,status):
+        self.new_user_status = status
+
+    def get_new_user_status(self):
+        return self.new_user_status
         
     def get_users(self):
         string2 = ''

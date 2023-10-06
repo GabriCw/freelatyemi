@@ -85,6 +85,17 @@ class View():
             nome_inserido = entry.get()
             Controller.new_user(self=self.controller, user=nome_inserido)
             entry.delete(0, END)
+            
+            user_status_object = Controller.get_new_user_status(self=self.controller)
+            user_status_text = user_status_object[1]
+            if user_status_object[0] == 0:      
+                user_status_color = 'red'
+            else:
+                user_status_color = 'dark green'
+            
+            # LABEL NEW USER STATUS
+            user_status = customtkinter.CTkLabel(self.janela, text=user_status_text, font=("Arial",10, "normal"), text_color=user_status_color)
+            user_status.pack(padx=10, pady=2)
 
         botao = customtkinter.CTkButton(self.janela, text="Inserir", command=inserir_nome)
         botao.pack(padx=10, pady=10)
@@ -218,9 +229,17 @@ class View():
             Controller.nova_conta(self=self.controller, pagador=pagador, valor=preco)
             entry2.delete(0, END)
             entry3.delete(0, END)
+            
+            status_object = Controller.get_nova_conta_status(self=self.controller)
+            status_text = status_object[1]
+            if status_object[0] == 0:      
+                status_color = 'red'
+            else:
+                status_color = 'dark green'
+            
             # LABEL NOVA CONTA STATUS
-            status = customtkinter.CTkLabel(self.janela3, text=Controller.get_nova_conta_status(self=self.controller), font=("Arial",16, "bold"))
-            status.pack(padx=10, pady=10)
+            status = customtkinter.CTkLabel(self.janela3, text=status_text, font=("Arial",10, "normal"), text_color=status_color)
+            status.pack(padx=10, pady=2)
 
         botao5 = customtkinter.CTkButton(self.janela3, text="Adicionar Conta", command=novaconta)
         botao5.pack(padx=10, pady=10)
@@ -276,9 +295,17 @@ class View():
             Controller.pagar_divida(self=self.controller, pagador=pagador, receptor=beneficiado)
             entry4.delete(0, END)
             entry5.delete(0, END)
+            
+            status2_object = Controller.get_pagar_divida_status(self=self.controller)
+            status2_text = status2_object[1]
+            if status2_object[0] == 0:      
+                status2_color = 'red'
+            else:
+                status2_color = 'dark green'
+                
             # LABEL PAGAR DIVIDA STATUS
-            status2 = customtkinter.CTkLabel(self.janela4, text=Controller.get_pagar_divida_status(self=self.controller), font=("Arial",16, "bold"))
-            status2.pack(padx=10, pady=3)
+            status2 = customtkinter.CTkLabel(self.janela4, text=status2_text, font=("Arial",10, "normal"), text_color=status2_color)
+            status2.pack(padx=10, pady=2)
 
         botao7 = customtkinter.CTkButton(self.janela4, text="Pagar Divida", command=pagar_a_divida)
         botao7.pack(padx=10, pady=10)
