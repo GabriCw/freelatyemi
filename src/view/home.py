@@ -27,20 +27,20 @@ def abrir_janela1():
     margem_cima = customtkinter.CTkLabel(janela, text="")
     margem_cima.pack(pady=10, side=TOP)
 
-    # Carregue a imagem
-    imagem = Image.open("C:/Users/gabri/Documents/freelatyemi/src/assets/Logo.jpg")
+    # # Carregue a imagem
+    # imagem = Image.open("C:/Users/gabri/Documents/freelatyemi/src/assets/Logo.jpg")
 
-    # Redimensione a imagem
-    largura = 441  # Defina a largura desejada
-    altura = 140  # Defina a altura desejada
-    imagem = imagem.resize((largura, altura), Image.NEAREST)
+    # # Redimensione a imagem
+    # largura = 441  # Defina a largura desejada
+    # altura = 140  # Defina a altura desejada
+    # imagem = imagem.resize((largura, altura))
 
-    # Crie o objeto PhotoImage
-    imagem = ImageTk.PhotoImage(imagem)
+    # # Crie o objeto PhotoImage
+    # imagem = ImageTk.PhotoImage(imagem)
 
-    # Crie um widget Label para exibir a imagem
-    label_imagem = Label(janela, image=imagem, bg="#242424")
-    label_imagem.pack(padx=0, pady=0)
+    # # Crie um widget Label para exibir a imagem
+    # label_imagem = Label(janela, image=imagem, bg="#242424")
+    # label_imagem.pack(padx=0, pady=0)
 
     #MARGEM TOP
     margem_cima = customtkinter.CTkLabel(janela, text="")
