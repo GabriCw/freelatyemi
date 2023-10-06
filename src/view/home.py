@@ -1,6 +1,7 @@
 from tkinter import *
 import customtkinter
 from ..control.main import Projeto
+from PIL import Image, ImageTk 
 
 # Define global variables to store the windows
 janela = None
@@ -18,13 +19,32 @@ def abrir_janela1():
         janela2.withdraw()
 
     janela = customtkinter.CTk()
-    janela.title("Splitwise")
+    janela.title("BudgetBuddy")
     janela.geometry("500x700")
     janela.maxsize(width=500, height=700)
 
     #MARGEM TOP
     margem_cima = customtkinter.CTkLabel(janela, text="")
-    margem_cima.pack(pady=50, side=TOP)
+    margem_cima.pack(pady=10, side=TOP)
+
+    # Carregue a imagem
+    imagem = Image.open("C:/Users/gabri/Documents/freelatyemi/src/assets/Logo.jpg")
+
+    # Redimensione a imagem
+    largura = 441  # Defina a largura desejada
+    altura = 140  # Defina a altura desejada
+    imagem = imagem.resize((largura, altura), Image.NEAREST)
+
+    # Crie o objeto PhotoImage
+    imagem = ImageTk.PhotoImage(imagem)
+
+    # Crie um widget Label para exibir a imagem
+    label_imagem = Label(janela, image=imagem, bg="#242424")
+    label_imagem.pack(padx=0, pady=0)
+
+    #MARGEM TOP
+    margem_cima = customtkinter.CTkLabel(janela, text="")
+    margem_cima.pack(pady=10, side=TOP)
 
     # LABEL GRUPO
     grupo = customtkinter.CTkLabel(janela, text="Adicione Pessoas ao seu grupo !", font=("Arial",16, "bold"))
@@ -84,7 +104,7 @@ def abrir_janela2():
         janela4.withdraw()
 
     janela2 = customtkinter.CTk()
-    janela2.title("Splitwise")
+    janela2.title("BudgetBuddy")
     janela2.geometry("500x700")
     janela2.maxsize(width=500, height=700)
 
@@ -146,7 +166,7 @@ def abrir_janela3():
         janela2.withdraw()
 
     janela3 = customtkinter.CTk()
-    janela3.title("Splitwise")
+    janela3.title("BudgetBuddy")
     janela3.geometry("500x700")
     janela3.maxsize(width=500, height=700)
 
@@ -206,7 +226,7 @@ def abrir_janela4():
         janela2.withdraw()
 
     janela4 = customtkinter.CTk()
-    janela4.title("Splitwise")
+    janela4.title("BudgetBuddy")
     janela4.geometry("500x700")
     janela4.maxsize(width=500, height=700)
 
