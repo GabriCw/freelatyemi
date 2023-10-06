@@ -17,6 +17,7 @@ class View():
         self.janela3 = None
         self.janela4 = None
         self.imagem = None
+        self.abrir_janela1()
 
     def carregar_imagem(self):
         # Carregue a imagem

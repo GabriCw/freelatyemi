@@ -9,6 +9,3 @@ users = []
 model = Model(users)
 controller = Controller(model)
 view = View(model,controller)
-
-# Inicializando Interface Gráfica com a janela1
-view.abrir_janela1()
