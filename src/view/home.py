@@ -40,8 +40,8 @@ def abrir_janela1():
 
     janela = customtkinter.CTk()
     janela.title("BudgetBuddy")
-    janela.geometry("500x700")
-    janela.maxsize(width=500, height=700)
+    janela.geometry("500x600")
+    janela.maxsize(width=500, height=600)
 
     #MARGEM TOP
     margem_cima = customtkinter.CTkLabel(janela, text="")
@@ -126,7 +126,7 @@ def abrir_janela2():
 
     janela2 = customtkinter.CTk()
     janela2.title("BudgetBuddy")
-    janela2.geometry("500x700")
+    janela2.geometry("500x600")
     janela2.maxsize(width=500, height=700)
 
     # Button to go back to janela1
