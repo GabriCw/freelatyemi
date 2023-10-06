@@ -4,7 +4,7 @@
 
 para rodar o arquivo e consequentemente o software, basta abrir na raiz do projeto um terminal e digitar o seguinte comando:
 
-``` python -m src.view.view ```
+``` python -m src.main.main ```
 
 
 -----------------------------------------------------------
