@@ -1,6 +1,6 @@
 import copy
 
-class Projeto():
+class Model():
     
     def __init__(self,users) -> None:
         self.users = users
