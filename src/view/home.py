@@ -48,16 +48,15 @@ def abrir_janela1():
     margem_cima.pack(pady=10, side=TOP)
 
 
-    ################# Carregando (tentando) a imagem #################
-    if imagem is None:
-        imagem = carregar_imagem()
+    ################## Carregando (tentando) a imagem #################
+    # if imagem is None:
+    #     imagem = carregar_imagem()
     
-    # Crie um widget Label para exibir a imagem
-    label_imagem = Label(janela, image=imagem, bg="#242424", anchor=NW)
-    label_imagem.image_names = imagem
-    label_imagem.pack(padx=0, pady=0)
-    
-    ##################################################################
+    # # Crie um widget Label para exibir a imagem
+    # label_imagem = Label(janela, image=imagem, bg="#242424", anchor=NW)
+    # label_imagem.image_names = imagem
+    # label_imagem.pack(padx=0, pady=0)
+    ###################################################################
     
     
     #MARGEM TOP
