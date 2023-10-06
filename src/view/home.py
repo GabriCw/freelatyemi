@@ -97,17 +97,31 @@ def abrir_janela2():
     margem_cima = customtkinter.CTkLabel(janela2, text="")
     margem_cima.pack(pady=30, side=TOP)
 
-    # LABEL TESTE
-    teste = customtkinter.CTkLabel(janela2, text="Grupo :", font=("Arial",16, "bold"))
-    teste.pack(padx=10, pady=3)
+    # LABEL GRUPO
+    grupo = customtkinter.CTkLabel(janela2, text="Grupo :", font=("Arial",16, "bold"))
+    grupo.pack(padx=10, pady=3)
 
     #LABEL NOMES
-    Projeto.realizar_calculo(self=projeto)
-    transactions_string = Projeto.get_transactions_string(self=projeto)
+    getusers = Projeto.get_users(self=projeto)
 
-    nomes = customtkinter.CTkLabel(janela2, text=transactions_string)
+    nomes = customtkinter.CTkLabel(janela2, text=getusers)
     nomes.pack(pady=20, side=TOP)
     nomes.configure(font=("Arial",16, "bold"))
+
+    #MARGEM
+    margem2 = customtkinter.CTkLabel(janela2, text="")
+    margem2.pack(pady=15, side=TOP)
+
+    # LABEL GRUPO
+    dividas = customtkinter.CTkLabel(janela2, text="Dividas em aberto:", font=("Arial",16, "bold"))
+    dividas.pack(padx=10, pady=3)
+
+    #LABEL DIVIDAS
+    transactions_string = Projeto.get_transactions_string(self=projeto)
+
+    dividas2 = customtkinter.CTkLabel(janela2, text=transactions_string)
+    dividas2.pack(pady=20, side=TOP)
+    dividas2.configure(font=("Arial",16, "bold"))
 
     # Button to go back to janela1
     botao3 = customtkinter.CTkButton(janela2, text="Nova Conta", command=abrir_janela3)
@@ -168,7 +182,14 @@ def abrir_janela3():
     margem2.pack(pady=20, side=TOP)
 
     # BOTÃO ADICIONAR CONTA
-    botao5 = customtkinter.CTkButton(janela3, text="Adicionar Conta")
+    def novaconta():
+        pagador = entry2.get()
+        preco = entry3.get()
+        Projeto.nova_conta(self=projeto, pagador=pagador, valor=preco)
+        entry2.delete(0, END)
+        entry3.delete(0, END)
+
+    botao5 = customtkinter.CTkButton(janela3, text="Adicionar Conta", command=novaconta)
     botao5.pack(padx=10, pady=10)
     botao5.configure(corner_radius=10, font=("Arial",15, "bold"))
 
@@ -221,14 +242,21 @@ def abrir_janela4():
     margem2.pack(pady=20, side=TOP)
 
     # BOTÃO ADICIONAR CONTA
-    botao7 = customtkinter.CTkButton(janela4, text="Pagar Divida")
+    def pagar_a_divida():
+        pagador = entry4.get()
+        beneficiado = entry5.get()
+        Projeto.pagar_divida(self=projeto, pagador=pagador, receptor=beneficiado)
+        entry4.delete(0, END)
+        entry5.delete(0, END)
+
+    botao7 = customtkinter.CTkButton(janela4, text="Pagar Divida", command=pagar_a_divida)
     botao7.pack(padx=10, pady=10)
     botao7.configure(corner_radius=10, font=("Arial",15, "bold"))
 
     janela4.mainloop()
 
 # Run the initial window (janela1)
-users = [{'Gabriel': 5}, {'Felipe': 10}, {'Davi': 5}, {'Jonathan': 7}, {'Gabriel P': 10}, {'Matheus': 20}]
+users = []
 
 projeto = Projeto(users)
 

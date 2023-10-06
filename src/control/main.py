@@ -10,7 +10,10 @@ class Projeto():
         
         # Calcula o total e a média dos saldos
         total = sum(list(user.values())[0] for user in self.users)
-        average = total / len(self.users)
+        try:
+            average = total / len(self.users)
+        except ZeroDivisionError:
+            average = 0
         balances = [copy.deepcopy(user) for user in self.users]
         
         # Calcula a diferença entre os saldos e a média
@@ -59,7 +62,7 @@ class Projeto():
         for user in self.users:
             for name in user.keys():
                 if str(name).upper() == str(pagador).upper():
-                    user[name] += valor
+                    user[name] += float(valor)
                     
         self.realizar_calculo()
         pass
@@ -105,40 +108,20 @@ class Projeto():
         self.users.append({user:0})
         
     def get_users(self):
-        return self.users        
+        string2 = ''
+        for user in self.users:
+            for name, value in user.items():
+                string2 += f'{name} gastou R${value:.2f}' + '\n'
+        return string2      
     
     def get_transactions(self):
         return self.transactions    
 
     def get_transactions_string(self):
+        self.realizar_calculo()
         string = ''
         for transaction in self.transactions:
             payer, receiver, amount = transaction
             amount_rounded = round(amount, 2)
             string += f'{receiver} deve pagar R${amount_rounded:.2f} para {payer}' + '\n'
         return string
-    
-    
-############################################ Criando uma instancia da classe Projeto para rodar os códigos ############################################
-
-# users = [{'Gabriel': 5}, {'Felipe': 10}, {'Davi': 5}, {'Jonathan': 7}, {'Gabriel P': 10}, {'Matheus': 20}]
-
-# projeto = Projeto(users)
-
-# projeto.new_user('Couto')
-# projeto.nova_conta('Couto',100)
-
-# transactions = projeto.realizar_calculo()
-
-# print(transactions)
-
-# usuarios = projeto.get_users()
-
-# # testando se o nome está na lista de transaçoes
-# print(usuarios)
-# projeto.pagar_divida('Gabriel','Couto')
-# print(usuarios)
-
-# print(projeto.get_transactions_string())
-
-#######################################################################################################################################################
