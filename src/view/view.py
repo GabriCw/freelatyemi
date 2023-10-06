@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 import tempfile
 import os
 
+
 class View():
     
     def __init__(self, model, controller) -> None:
@@ -81,7 +82,7 @@ class View():
         # BOTÃO INSERIR
         def inserir_nome():
             nome_inserido = entry.get()
-            Controller.new_user(self=controller, user=nome_inserido)
+            Controller.new_user(self=self.controller, user=nome_inserido)
             entry.delete(0, END)
 
         botao = customtkinter.CTkButton(self.janela, text="Inserir", command=inserir_nome)
@@ -133,7 +134,7 @@ class View():
         grupo.pack(padx=10, pady=3)
 
         #LABEL NOMES
-        getusers = Controller.get_users(self=controller)
+        getusers = Controller.get_users(self=self.controller)
 
         nomes = customtkinter.CTkLabel(self.janela2, text=getusers)
         nomes.pack(pady=20, side=TOP)
@@ -148,7 +149,7 @@ class View():
         dividas.pack(padx=10, pady=3)
 
         #LABEL DIVIDAS
-        transactions_string = Controller.get_transactions_string(self=controller)
+        transactions_string = Controller.get_transactions_string(self=self.controller)
 
         dividas2 = customtkinter.CTkLabel(self.janela2, text=transactions_string)
         dividas2.pack(pady=20, side=TOP)
@@ -213,11 +214,11 @@ class View():
             status = customtkinter.CTkLabel(self.janela3, text='', font=("Arial",16, "bold"))
             pagador = entry2.get()
             preco = entry3.get()
-            Controller.nova_conta(self=controller, pagador=pagador, valor=preco)
+            Controller.nova_conta(self=self.controller, pagador=pagador, valor=preco)
             entry2.delete(0, END)
             entry3.delete(0, END)
             # LABEL NOVA CONTA STATUS
-            status = customtkinter.CTkLabel(self.janela3, text=Controller.get_nova_conta_status(self=controller), font=("Arial",16, "bold"))
+            status = customtkinter.CTkLabel(self.janela3, text=Controller.get_nova_conta_status(self=self.controller), font=("Arial",16, "bold"))
             status.pack(padx=10, pady=10)
 
         botao5 = customtkinter.CTkButton(self.janela3, text="Adicionar Conta", command=novaconta)
@@ -271,11 +272,11 @@ class View():
         def pagar_a_divida():
             pagador = entry4.get()
             beneficiado = entry5.get()
-            Controller.pagar_divida(self=controller, pagador=pagador, receptor=beneficiado)
+            Controller.pagar_divida(self=self.controller, pagador=pagador, receptor=beneficiado)
             entry4.delete(0, END)
             entry5.delete(0, END)
             # LABEL PAGAR DIVIDA STATUS
-            status2 = customtkinter.CTkLabel(self.janela4, text=Controller.get_pagar_divida_status(self=controller), font=("Arial",16, "bold"))
+            status2 = customtkinter.CTkLabel(self.janela4, text=Controller.get_pagar_divida_status(self=self.controller), font=("Arial",16, "bold"))
             status2.pack(padx=10, pady=3)
 
         botao7 = customtkinter.CTkButton(self.janela4, text="Pagar Divida", command=pagar_a_divida)
@@ -284,13 +285,3 @@ class View():
 
         self.janela4.mainloop()
 
-# Inicializando vetor users vazio
-users = []
-
-# Criando instâncias das classes MVC (model, view e controller)
-model = Model(users)
-controller = Controller(model)
-view = View(model,controller)
-
-# Inicializando Interface Gráfica com a janela1
-view.abrir_janela1()
